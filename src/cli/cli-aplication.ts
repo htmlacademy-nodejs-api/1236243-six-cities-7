@@ -7,7 +7,7 @@ export class CLIApplication {
   private commands: CommandCollection = {};
 
   constructor (
-    private readonly defaultCommand: string = '--help'
+    private readonly defaultCommand = '--help'
   ) {}
 
   public registerCommands(commandList: Command[]):void {

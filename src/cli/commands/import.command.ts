@@ -1,3 +1,4 @@
+import { TSVFileReader } from '../../shared/libs/file-reader/tsv-file-reader.js';
 import { Command } from './command.interface.js';
 
 export class ImportCommand implements Command {
@@ -5,7 +6,20 @@ export class ImportCommand implements Command {
     return '--import';
   }
 
-  public execute(..._parameters: string[]): void {
+  public execute(...parameters: string[]): void {
+    const [fileName] = parameters;
+    const fileReader = new TSVFileReader(fileName.trim());
 
+    try {
+      fileReader.read();
+      console.log(fileReader.toArray());
+    } catch (error) {
+      if(!(error instanceof Error)) {
+        throw error;
+      }
+
+      console.error(`Can't import data from ${fileName}`);
+      console.error(`Details: ${error.message}`);
+    }
   }
 }
