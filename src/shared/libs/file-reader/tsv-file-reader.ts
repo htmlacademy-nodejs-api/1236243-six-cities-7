@@ -27,7 +27,6 @@ export class TSVFileReader implements FileReader {
 
   private parseToOffer(line: string): OfferType{
     const [
-      id,
       name,
       description,
       date,
@@ -52,7 +51,6 @@ export class TSVFileReader implements FileReader {
     ] = line.split('\t');
 
     return {
-      id,
       name,
       description,
       date: new Date(date),

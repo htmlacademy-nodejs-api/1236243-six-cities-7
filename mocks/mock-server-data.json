@@ -1,0 +1,165 @@
+{
+    "api": {
+        "name": [
+            "Квартира с видом на улицу",
+            "Классный коттедж",
+            "Великолепные аппартаменты",
+            "Маленькая квартира",
+            "Крошечная комната",
+            "Светлый отель"
+        ],
+        "description": [
+            "Вам понравится тут отдыхать. Много классных мест",
+            "Замечательный вид на достопремичательности",
+            "Самое лучшее место для шопинга",
+            "Можно с детьми купаться и отдыхать",
+            "Рядом самые топовые ночные клубы и бары"
+        ],
+        "city": [
+            {
+                "name": "Paris",
+                "coordinates": {
+                    "latitude": "48.85661",
+                    "longitude": "2.351499"
+                }
+            },
+            {
+                "name": "Cologne ",
+                "coordinates": {
+                    "latitude": "50.938361",
+                    "longitude": "6.959974"
+                }
+            },
+            {
+                "name": "Brussels ",
+                "coordinates": {
+                    "latitude": "50.846557",
+                    "longitude": "4.351697"
+                }
+            },
+            {
+                "name": "Amsterdam ",
+                "coordinates": {
+                    "latitude": "52.370216",
+                    "longitude": "4.895168"
+                }
+            },
+            {
+                "name": "Hamburg ",
+                "coordinates": {
+                    "latitude": "53.550341",
+                    "longitude": "10.000654"
+                }
+            },
+            {
+                "name": "Dusseldorf ",
+                "coordinates": {
+                    "latitude": "51.225402",
+                    "longitude": "6.776314"
+                }
+            }
+        ],
+        "prevFoto": [
+            "markup/img/amsterdam.jpg",
+            "markup/img/amsterdam.jpg",
+            "markup/img/amsterdam.jpg",
+            "markup/img/amsterdam.jpg",
+            "markup/img/amsterdam.jpg",
+            "markup/img/amsterdam.jpg"
+        ],
+        "foto": [
+            "markup/img/apartment-01.jpg",
+            "markup/img/apartment-02.jpg",
+            "markup/img/apartment-03.jpg",
+            "markup/img/apartment-01.jpg",
+            "markup/img/apartment-02.jpg",
+            "markup/img/apartment-03.jpg"
+        ],
+        "isPremium": [
+            "true",
+            "false"
+        ],
+        "isFavorites": [
+            "true",
+            "false"
+        ],
+        "type": [
+            "apartment",
+            "house",
+            "room",
+            "hotel"
+        ],
+        "extras": [
+            "Breakfast",
+            "Air conditioning",
+            "Laptop friendly workspace",
+            "Baby seat",
+            "Washer",
+            "Towels",
+            "Fridge"
+        ],
+        "user": [
+            {
+                "name": "Пупкин Вася",
+                "email": "vasya@mail.ru",
+                "avatar": "markup/img/avatar-max.jpg",
+                "password": "123123qw",
+                "type": "user"
+            },
+            {
+                "name": "Уилл Смит",
+                "email": "smit@mail.ru",
+                "avatar": "markup/img/avatar-max.jpg",
+                "password": "qwasdaqw",
+                "type": "user"
+            },
+            {
+                "name": "Вин Дизель",
+                "email": "disel@mail.ru",
+                "avatar": "markup/img/avatar-max.jpg",
+                "password": "asdzxcza",
+                "type": "pro"
+            },
+            {
+                "name": "Колобок Альбертович",
+                "email": "kolobok@mail.ru",
+                "avatar": "markup/img/avatar-max.jpg",
+                "password": "kolobok",
+                "type": "pro"
+            },
+            {
+                "name": "Лиса Алексеевна",
+                "email": "lisa@mail.ru",
+                "avatar": "markup/img/avatar-angelina.jpg",
+                "password": "asaaqzx",
+                "type": "user"
+            }
+        ],
+        "coords": [
+            {
+                "latitude": "49.85661",
+                "longitude": "3.351499"
+            },
+            {
+                "latitude": "51.938361",
+                "longitude": "7.959974"
+            },
+            {
+                "latitude": "51.846557",
+                "longitude": "5.351697"
+            },
+            {
+                "latitude": "53.370216",
+                "longitude": "5.895168"
+            },
+            {
+                "latitude": "54.550341",
+                "longitude": "11.000654"
+            },
+            {
+                "latitude": "52.225402",
+                "longitude": "7.776314"
+            }
+        ]
+    }
+}
