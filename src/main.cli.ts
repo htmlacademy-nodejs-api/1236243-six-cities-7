@@ -1,8 +1,5 @@
 #!/usr/bin/env node
-import { CLIApplication } from './cli-aplication.js';
-import { ImportCommand } from './commands/import.command.js';
-import { HelpCommand, VersionCommand} from './index.js';
-
+import { CLIApplication, ImportCommand, HelpCommand, VersionCommand} from './cli/index.js';
 
 function bootstrap() {
   const cliApplication = new CLIApplication();
