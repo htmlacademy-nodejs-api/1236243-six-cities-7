@@ -7,8 +7,8 @@ export type OfferType = {
     description: string;
     date: Date;
     city: CityType;
-    prevFoto: string;
-    foto: FotoType[];
+    prevPhoto: string;
+    photo: FotoType[];
     isPremium: boolean;
     isFavorites: boolean;
     rating: number;

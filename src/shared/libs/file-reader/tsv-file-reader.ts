@@ -1,8 +1,6 @@
 import { FileReader } from './file-reader.interface.js';
-import { OfferType } from '../../types/offer.type.js';
 import { CitiesEnum, TypeOfHouseEnum, UserEnum } from '../../types/enums.js';
-import { CityCoordinate, CityType, CoordinatesType } from '../../types/cities.type.js';
-import { UserType } from '../../types/user.type.js';
+import { CityCoordinate, CityType, CoordinatesType, UserType, OfferType } from '../../types/index.js';
 import { EventEmitter } from 'node:events';
 import { createReadStream } from 'node:fs';
 
@@ -22,8 +20,8 @@ export class TSVFileReader extends EventEmitter implements FileReader {
       description,
       date,
       city,
-      prevFoto,
-      foto,
+      prevPhoto,
+      photo,
       isPremium,
       isFavorites,
       rating,
@@ -46,8 +44,8 @@ export class TSVFileReader extends EventEmitter implements FileReader {
       description,
       date: new Date(date),
       city: this.parseCity(city),
-      prevFoto,
-      foto: this.parseFoto(foto),
+      prevPhoto,
+      photo: this.parseFoto(photo),
       isPremium: !!isPremium,
       isFavorites: !!isFavorites,
       rating: parseFloat(rating),

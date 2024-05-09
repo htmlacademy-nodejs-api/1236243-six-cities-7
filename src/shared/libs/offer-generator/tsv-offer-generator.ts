@@ -28,7 +28,7 @@ export class TSVOfferGenerator {
     const date = dayjs().subtract(generateRandomValue(FIRST_WEEK_DAY, LAST_WEEK_DAY), 'day').toISOString();
     const city = generateRandomItem(this.mockData.city);
     const prevPhoto = generateRandomItem(this.mockData.prevPhoto);
-    const photo = generateRandomItems(this.mockData.photo).join(';');
+    const photo = this.mockData.photo.join(';');
     const isPremium = generateRandomItem(this.mockData.isPremium);
     const isFavorites = generateRandomItem(this.mockData.isFavorites);
     const rating = generateRandomValue(MIN_RATING, MAX_RATING).toString();
