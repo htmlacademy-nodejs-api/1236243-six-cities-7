@@ -11,3 +11,7 @@ export function generateRandomItems<T>(items: T[]): T[] {
 export function generateRandomItem<T> (items: T[]): T {
   return items[generateRandomValue(0, items.length - 1)];
 }
+
+export function getErrorMessage(error: unknown): string {
+  return error instanceof Error ? error.message : '';
+}
