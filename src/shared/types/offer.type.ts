@@ -3,13 +3,12 @@ import { ExtraType, FotoType, TypeOfHouseEnum } from './enums.js';
 import { UserType } from './user.type.js';
 
 export type OfferType = {
-    id: string;
     name: string;
     description: string;
     date: Date;
     city: CityType;
-    prevFoto: string;
-    foto: FotoType[];
+    prevPhoto: string;
+    photo: FotoType[];
     isPremium: boolean;
     isFavorites: boolean;
     rating: number;

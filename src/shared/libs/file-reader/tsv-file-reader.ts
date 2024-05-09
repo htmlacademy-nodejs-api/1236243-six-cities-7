@@ -1,39 +1,27 @@
-import { readFileSync } from 'node:fs';
 import { FileReader } from './file-reader.interface.js';
-import { OfferType } from '../../types/offer.type.js';
 import { CitiesEnum, TypeOfHouseEnum, UserEnum } from '../../types/enums.js';
-import { CityCoordinate, CityType, CoordinatesType } from '../../types/cities.type.js';
-import { UserType } from '../../types/user.type.js';
+import { CityCoordinate, CityType, CoordinatesType, UserType, OfferType } from '../../types/index.js';
+import { EventEmitter } from 'node:events';
+import { createReadStream } from 'node:fs';
 
-export class TSVFileReader implements FileReader {
-  private rawData = '';
+export class TSVFileReader extends EventEmitter implements FileReader {
+
+  private CHUNK_SIZE = 16384; // 16KB
 
   constructor (
     private readonly filename: string
-  ) {}
-
-  private validateRawData (): void {
-    if (!this.rawData) {
-      throw new Error ('File was not read');
-    }
-  }
-
-  private parseRawDataToOffers(): OfferType[] {
-    return this.rawData
-      .split('\n')
-      .filter((row) => row.trim().length > 0)
-      .map((line) => this.parseToOffer(line));
+  ) {
+    super();
   }
 
   private parseToOffer(line: string): OfferType{
     const [
-      id,
       name,
       description,
       date,
       city,
-      prevFoto,
-      foto,
+      prevPhoto,
+      photo,
       isPremium,
       isFavorites,
       rating,
@@ -52,13 +40,12 @@ export class TSVFileReader implements FileReader {
     ] = line.split('\t');
 
     return {
-      id,
       name,
       description,
       date: new Date(date),
       city: this.parseCity(city),
-      prevFoto,
-      foto: this.parseFoto(foto),
+      prevPhoto,
+      photo: this.parseFoto(photo),
       isPremium: !!isPremium,
       isFavorites: !!isFavorites,
       rating: parseFloat(rating),
@@ -115,13 +102,31 @@ export class TSVFileReader implements FileReader {
     };
   }
 
-  public read(): void {
-    this.rawData = readFileSync(this.filename, {encoding: 'utf-8'});
-  }
+  public async read(): Promise<void> {
+    const readStream = createReadStream(this.filename, {
+      highWaterMark: this.CHUNK_SIZE,
+      encoding: 'utf-8',
+    });
 
-  public toArray(): OfferType[] {
-    this.validateRawData();
-    return this.parseRawDataToOffers();
-  }
+    let remainingData = '';
+    let nextLinePosition = -1;
+    let importedRowCount = 0;
 
+    for await (const chunk of readStream) {
+      remainingData += chunk.toString();
+
+      while ((nextLinePosition = remainingData.indexOf('\n')) >= 0) {
+        const completeRow = remainingData.slice(0, nextLinePosition + 1);
+        remainingData = remainingData.slice(++nextLinePosition);
+        importedRowCount++;
+
+        const parsedOffer = this.parseToOffer(completeRow);
+        this.emit('line', parsedOffer);
+      }
+    }
+
+    this.emit('end', importedRowCount);
+  }
 }
+
+
