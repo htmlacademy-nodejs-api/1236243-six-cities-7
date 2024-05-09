@@ -11,7 +11,10 @@ export class GenerateCommand implements Command {
   private async load(url: string) {
     try{
       this.initialData = await got.get(url).json();
-    } catch {
+    } catch (err) {
+      if (err instanceof Error) {
+        console.error(err.message);
+      }
       throw new Error (`Can't load data from ${url}`);
     }
   }

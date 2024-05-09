@@ -2,5 +2,6 @@ export {
   generateRandomValue,
   generateRandomItems,
   generateRandomItem,
-  getErrorMessage
+  getErrorMessage,
+  ParsedObject
 } from './common.js';

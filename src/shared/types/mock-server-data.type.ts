@@ -8,7 +8,7 @@ export type MockServerDataType = {
     prevFoto: string[],
     foto: string[],
     isPremium: boolean[],
-    isFavorite: boolean[],
+    isFavorites: boolean[],
     type: string[],
     extras: string[],
     user: UserType[],

@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import { generateRandomItem, generateRandomItems, generateRandomValue } from '../../helpers/common.js';
+import { ParsedObject, generateRandomItem, generateRandomItems, generateRandomValue } from '../../helpers/common.js';
 import { CityType, CoordinatesType } from '../../types/cities.type.js';
 import { MockServerDataType } from '../../types/mock-server-data.type.js';
 import { UserType } from '../../types/user.type.js';
@@ -32,7 +32,7 @@ export class TSVOfferGenerator {
     const prevFoto = generateRandomItem<string>(this.mockData.prevFoto);
     const foto = generateRandomItems<string>(this.mockData.foto).join(';');
     const isPremium = generateRandomItem<boolean>(this.mockData.isPremium);
-    const isFavorites = generateRandomItem<boolean>(this.mockData.isFavorite);
+    const isFavorites = generateRandomItem<boolean>(this.mockData.isFavorites);
     const rating = generateRandomValue(MIN_RATING, MAX_RATING).toString();
     const type = generateRandomItem<string>(this.mockData.type);
     const rooms = generateRandomValue(MIN_ROOM, MAX_ROOMS);
@@ -41,12 +41,10 @@ export class TSVOfferGenerator {
     const extras = generateRandomItems<string>(this.mockData.extras).join(';');
     const user = generateRandomItem<UserType>(this.mockData.user);
     const comments = generateRandomValue(MIN_COMMENT, MAX_COMMENTS);
-    const coords = generateRandomItem<CoordinatesType>(this.mockData.coords);
-
-    console.log(date);
+    const coords = ParsedObject(generateRandomItem<CoordinatesType>(this.mockData.coords));
 
     return [
-      name, description, date, city.name, prevFoto, foto, isPremium, isFavorites, rating, type, rooms, guests, price, extras, user.name, user.email, user.avatar, user.password, user.type, comments, coords.latitude, coords.longitude
+      name, description, date, city.name, prevFoto, foto, isPremium, isFavorites, rating, type, rooms, guests, price, extras, user.name, user.email, user.avatar, user.password, user.type, comments, coords
     ].join('\t');
   }
 }

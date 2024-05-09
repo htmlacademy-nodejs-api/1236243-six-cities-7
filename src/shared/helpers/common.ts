@@ -15,3 +15,8 @@ export function generateRandomItem<T> (items: T[]): T {
 export function getErrorMessage(error: unknown): string {
   return error instanceof Error ? error.message : '';
 }
+
+export function ParsedObject(obj: object): string {
+  const values = Object.values(obj);
+  return values.join(';');
+}

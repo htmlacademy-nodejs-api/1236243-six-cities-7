@@ -1,4 +1,3 @@
-
 import { FileReader } from './file-reader.interface.js';
 import { OfferType } from '../../types/offer.type.js';
 import { CitiesEnum, TypeOfHouseEnum, UserEnum } from '../../types/enums.js';
