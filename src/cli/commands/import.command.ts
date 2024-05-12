@@ -1,6 +1,6 @@
 import { getErrorMessage } from '../../shared/helpers/common.js';
-import { TSVFileReader } from '../../shared/libs/file-reader/tsv-file-reader.js';
-import { OfferType } from '../../shared/types/offer.type.js';
+import { TSVFileReader } from '../../shared/libs/file-reader/index.js';
+import { OfferType } from '../../shared/types/index.js';
 import { Command } from './command.interface.js';
 
 export class ImportCommand implements Command {
@@ -24,7 +24,7 @@ export class ImportCommand implements Command {
     fileReader.on('end', this.onCompleteImport);
 
     try {
-      fileReader.read();
+      await fileReader.read();
     } catch (error) {
 
       console.error(`Can't import data from ${fileName}`);
