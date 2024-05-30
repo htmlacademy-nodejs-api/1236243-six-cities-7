@@ -33,6 +33,6 @@ export type ExtraType = {
     extra: string
 }
 
-export type FotoType = {
-    foto: string
+export type PhotoType = {
+    photo: string
 }

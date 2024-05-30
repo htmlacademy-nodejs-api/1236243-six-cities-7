@@ -42,7 +42,7 @@ export class TSVOfferGenerator {
     const coords = ParsedObject(generateRandomItem<CoordinatesType>(this.mockData.coords));
 
     return [
-      name, description, date, city.name, prevPhoto, photo, isPremium, isFavorites, rating, type, rooms, guests, price, extras, user.name, user.email, user.avatar, user.password, user.type, comments, coords
+      name, description, date, city.name, prevPhoto, photo, isPremium, isFavorites, rating, type, rooms, guests, price, extras, user.name, user.email, user.avatarPath, user.password, user.type, comments, coords
     ].join('\t');
   }
 }

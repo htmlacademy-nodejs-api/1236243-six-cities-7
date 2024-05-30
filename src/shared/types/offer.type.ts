@@ -1,5 +1,5 @@
 import { CityType, CoordinatesType } from './cities.type.js';
-import { ExtraType, FotoType, TypeOfHouseEnum } from './enums.js';
+import { ExtraType, PhotoType, TypeOfHouseEnum } from './enums.js';
 import { UserType } from './user.type.js';
 
 export type OfferType = {
@@ -8,7 +8,7 @@ export type OfferType = {
     date: Date;
     city: CityType;
     prevPhoto: string;
-    photo: FotoType[];
+    photo: PhotoType[];
     isPremium: boolean;
     isFavorites: boolean;
     rating: number;

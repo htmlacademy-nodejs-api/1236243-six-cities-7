@@ -3,7 +3,7 @@ import { UserEnum } from './enums.js';
 export type UserType = {
     name: string;
     email: string;
-    avatar?: string;
+    avatarPath?: string;
     password: string;
     type: UserEnum;
 }

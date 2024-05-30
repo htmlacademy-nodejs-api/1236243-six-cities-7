@@ -45,7 +45,7 @@ export class TSVFileReader extends EventEmitter implements FileReader {
       date: new Date(date),
       city: this.parseCity(city),
       prevPhoto,
-      photo: this.parseFoto(photo),
+      photo: this.parsePhoto(photo),
       isPremium: !!isPremium,
       isFavorites: !!isFavorites,
       rating: parseFloat(rating),
@@ -76,8 +76,8 @@ export class TSVFileReader extends EventEmitter implements FileReader {
     };
   }
 
-  private parseFoto(fotos: string): {foto: string}[] {
-    return fotos.split(';').map((foto) => ({foto}));
+  private parsePhoto(photos: string): {photo: string}[] {
+    return photos.split(';').map((photo) => ({photo}));
   }
 
   private parseExtras(extras: string): {extra: string}[] {
@@ -88,7 +88,7 @@ export class TSVFileReader extends EventEmitter implements FileReader {
     return {
       name: userName,
       email: email,
-      avatar: avatar,
+      avatarPath: avatar,
       password: password,
       type: userType as UserEnum
     };
@@ -123,7 +123,9 @@ export class TSVFileReader extends EventEmitter implements FileReader {
         nextLinePosition = remainingData.indexOf('\n');
 
         const parsedOffer = this.parseToOffer(completeRow);
-        this.emit('line', parsedOffer);
+        await new Promise((resolve) => {
+          this.emit('line', parsedOffer, resolve);
+        });
       }
     }
 
