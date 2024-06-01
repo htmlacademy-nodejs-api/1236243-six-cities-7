@@ -76,12 +76,12 @@ export class TSVFileReader extends EventEmitter implements FileReader {
     };
   }
 
-  private parsePhoto(photos: string): {photo: string}[] {
-    return photos.split(';').map((photo) => ({photo}));
+  private parsePhoto(photos: string): string[] {
+    return photos.split(';');
   }
 
-  private parseExtras(extras: string): {extra: string}[] {
-    return extras.split(';').map((extra) => ({extra}));
+  private parseExtras(extras: string): string[] {
+    return extras.split(';');
   }
 
   private parseUserInfo(userName: string, email: string, avatar: string,password: string, userType: string): UserType {

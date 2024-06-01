@@ -28,11 +28,3 @@ export enum ExtrasEnum {
     Towels = 'Towels',
     Fridge = 'Fridge'
 }
-
-export type ExtraType = {
-    extra: string
-}
-
-export type PhotoType = {
-    photo: string
-}

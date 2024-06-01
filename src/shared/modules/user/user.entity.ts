@@ -26,7 +26,7 @@ export class UserEntity extends defaultClasses.TimeStamps implements UserType{
   @prop({trim: true, default: 'https://15.design.htmlacademy.pro/static/avatar/8.jpg'})
   public avatarPath?: string;
 
-  @prop({required: true, trim: true, minlength: 6, maxlength: 12, default: ''})
+  @prop({required: true, trim: true, default: ''})
   public password: string;
 
   @prop({required: true, enum: UserEnum, default: ''})

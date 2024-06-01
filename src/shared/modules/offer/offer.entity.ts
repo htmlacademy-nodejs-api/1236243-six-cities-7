@@ -2,9 +2,7 @@ import {defaultClasses, getModelForClass, modelOptions, prop, Ref} from '@typego
 import {
   CityType,
   CoordinatesType,
-  ExtraType,
   OfferType,
-  PhotoType,
   TypeOfHouseEnum,
   UserType
 } from '../../types/index.js';
@@ -22,7 +20,7 @@ export interface OfferEntity extends defaultClasses.Base{}
 )
 // eslint-disable-next-line @typescript-eslint/no-unsafe-declaration-merging
 export class OfferEntity extends defaultClasses.TimeStamps implements OfferType {
-  @prop({require: true, unique: true})
+  @prop({require: true})
   public name: string;
 
   @prop({require: true})
@@ -37,7 +35,7 @@ export class OfferEntity extends defaultClasses.TimeStamps implements OfferType 
   public prevPhoto: string;
 
   @prop({require: true})
-  public photo: PhotoType[];
+  public photo: string[];
 
   @prop({require: true})
   public isPremium: boolean;
@@ -66,9 +64,8 @@ export class OfferEntity extends defaultClasses.TimeStamps implements OfferType 
 
   @prop({
     require: true,
-    type: () => String
   })
-  public extras: ExtraType[];
+  public extras: string[];
 
   @prop({require: true, ref: UserEntity})
   public userId: Ref<UserEntity>;

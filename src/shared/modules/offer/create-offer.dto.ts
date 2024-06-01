@@ -1,4 +1,4 @@
-import {CityType, CoordinatesType, ExtraType, PhotoType, TypeOfHouseEnum} from '../../types/index.js';
+import {CityType, CoordinatesType, TypeOfHouseEnum} from '../../types/index.js';
 
 export class CreateOfferDto {
   public name: string;
@@ -6,7 +6,7 @@ export class CreateOfferDto {
   public date: Date;
   public city: CityType;
   public prevPhoto: string;
-  public photo: PhotoType[];
+  public photo: string[];
   public isPremium: boolean;
   public isFavorites: boolean;
   public rating: number;
@@ -14,7 +14,7 @@ export class CreateOfferDto {
   public rooms: number;
   public guests: number;
   public price: number;
-  public extras: ExtraType[];
+  public extras: string[];
   public userId: string;
   public comments: number;
   public coords: CoordinatesType;
