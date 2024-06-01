@@ -3,3 +3,4 @@ export { CoordinatesType, CityType, CityCoordinate} from './cities.type.js';
 export { OfferType } from './offer.type.js';
 export { UserType } from './user.type.js';
 export { Component } from './component.enum.js';
+export { TypeOfHouseEnum } from './enums.js';
