@@ -1,0 +1,517 @@
+openapi: 3.0.3
+
+info:
+  title: API сервер для проекта "Шесть городов"
+  description: Список ресурсов и маршерутоввв сервера "Шесть городов"
+  version: 1.0.0
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+
+tags:
+  - name: offers
+    description: Действия с обновлениями.
+  - name: users
+    description: Действия с пользователем.
+  - name: comments
+    description: Действия с комментариями.
+
+paths:
+  /users/register:
+    post:
+      tags:
+        - users
+      summary: Регистрация пользователя.
+      description: Регистрирует нового пользователя.
+      requestBody:
+        description: Информация для создания нового пользователя.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/createUser'
+        required: true
+
+      responses:
+        "201":
+          description: Пользователь зарегистрирован. Объект пользователя
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/user'
+
+        "400":
+          description: Ошибка валидации. Данные указаны неверно
+
+        "409":
+          description: Пользователь с таким email уже существует
+
+  /users/login:
+    post:
+      tags:
+        - users
+      summary: Авторизация пользователя.
+      description: Авторизует пользователя на основе логина и пароля.
+
+      requestBody:
+        description: Информация для авторизации пользователя
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/authUser'
+        required: true
+
+      responses:
+        "200":
+          description: Пользователь успешно авторизован. Возвращает токен
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/userToken'
+        "401":
+          description: Пользователь не авторизован. Проверьте логин или пароль
+
+    get:
+      tags:
+        - users
+      summary: Проверка состояния пользователя.
+      description: Возвращает информацию по авторизованному пользователю.
+
+      responses:
+        "200":
+          description: Пользователь авторизован. Возвращает объект пользователя
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/user'
+
+        "401":
+          description: Пользователь не авторизован.
+
+  /users/logout:
+    get:
+      tags:
+        - users
+      summary: Завершает пользовательскую сессию
+      description: Завершает пользовательскую сессию
+
+      responses:
+        "204":
+          description: Сеанс завершен
+
+        "401":
+          description: Пользователь не авторизован
+
+  /offers:
+    get:
+      tags:
+        - offers
+      summary: Возвращает список предложений
+      description: Возвращает весь список предложений
+
+      responses:
+        "200":
+          description: Полный список предложений
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/offersList'
+    post:
+      tags:
+        - offers
+      summary: Добавление нового предложения
+      description: Добавляет новое предложение. Доступно только авторизованным пользователям
+
+      requestBody:
+        description: Создание нового предложения
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/createOffer'
+
+      responses:
+        "201":
+          description: Новое предложение создано
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/offer'
+
+        "401":
+          description: Пользователь не авторизован
+
+  /offers/{offer_id}/:
+    get:
+      tags:
+        - offers
+      summary: Получение подробного описания предложения
+      description: Подробное описания предложения. Могут получать авторизованные и не авторизованные пользователи
+
+      responses:
+        "200":
+          description: Подробное описание предложения
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/offer'
+
+    put:
+      tags:
+        - offers
+      summary: Редактирование предложения
+      description: Редактирование предложения. Доступно только авторизованному пользователю
+
+      requestBody:
+        description: Редактирование предложения
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/offer'
+
+      responses:
+        "201":
+          description: Редактирование предложения
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/offer'
+        "401":
+          description: Пользователь не авторизован
+
+    delete:
+      tags:
+        - offers
+      summary: Удаление предложения
+      description: Удаление предложения. Пользователь может удалить только свое предложение
+
+      responses:
+        "204":
+          description: Удаление предложения
+
+        "401":
+          description: Пользователь не авторизован
+
+  /offers/premium/:
+    get:
+      tags:
+        - offers
+      summary: Премиум предложения
+      description: Премиум предложения доступны только авторизованному полльзователю. Список отсортирован по дате.
+                Возвращает не более трех предложений
+
+      responses:
+        "200":
+          description: Премиум предложения
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/offersList'
+
+  /offers/favorites/:
+    get:
+      tags:
+        - offers
+      summary: Избранные предложения
+      description: Избранные предложения. Доступен только авторизованным пользователям
+
+      responses:
+        "200":
+          description: Список избранных предложений
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/offersList'
+        "401":
+          description: Пользователь не авторизован
+
+  /offers/favotites/{offerId}/{action}:
+    post:
+      tags:
+        - offers
+      summary: Добавление или удаление преложения в избранное
+      description: Добавляет или удаляет из избранного предложение. Доступно только авторизованному пользователю
+
+      responses:
+        "200":
+          description: возвращает обновленную информацию о предложении
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/offer'
+        "401":
+          description: Пользователь не авторизован.
+
+
+components:
+  schemas:
+    createUser:
+      type: object
+      properties:
+        email:
+          type: string
+          example: igor@mail.ru
+
+        name:
+          type: string
+          example: Igor
+
+        password:
+          type: string
+          example: zxz451
+
+        type:
+          type: string
+          example: user
+
+        avatarPath:
+          type: string
+          example: markup\img\avatar-max.jpg
+
+    user:
+      type: object
+      properties:
+        email:
+          type: string
+          example: igor@mail.ru
+
+        name:
+          type: string
+          example: Igor
+
+        type:
+          type: string
+          example: user
+
+        avatarPath:
+          type: string
+          example: markup\img\avatar-max.jpg
+
+    authUser:
+      type: object
+      properties:
+        email:
+          type: string
+          example: igor@mail.ru
+
+        password:
+          type: string
+          example: asd123
+
+    userToken:
+      type: object
+      properties:
+        token:
+          type: string
+          example: FgegmVyLmsdfsslcpbkBnbWFC5jb20=
+
+#OFFERS
+    offersList:
+      type: object
+      properties:
+        name:
+          type: string
+          example: Гостевой дом
+
+        date:
+          type: string
+          example: 2024-04-12T20:17:46.384Z
+        city:
+          type: string
+          example: Paris
+          enum:
+            - Paris
+            - Cologne
+            - Brussels
+            - Amsterdam
+            - Hamburg
+            - Dusseldorf
+        prevPhoto:
+          type: string
+          example: markup/img/paris.jpg
+        isPremium:
+          type: boolean
+          example: true
+        isFavorites:
+          type: boolean
+          example: false
+        rating:
+          type: number
+          example: 5
+        guests:
+          type: number
+          example: 3
+        price:
+          type: number
+          example: 10000
+        comments:
+          type: number
+          example: 5
+
+    offer:
+      type: object
+      properties:
+        name:
+          type: string
+          example: Гостевой дом
+        description:
+          type: string
+          example: Прелестное место для отдыха
+        date:
+          type: string
+          example: 2024-04-12T20:17:46.384Z
+        city:
+          type: string
+          example: Paris
+          enum:
+            - Paris
+            - Cologne
+            - Brussels
+            - Amsterdam
+            - Hamburg
+            - Dusseldorf
+        prevPhoto:
+          type: string
+          example: markup/img/paris.jpg
+        photo:
+          type: array
+          example:
+            - markup/img/apartment-03.jpg
+            - markup/img/apartment-03.jpg
+            - markup/img/apartment-03.jpg
+            - markup/img/apartment-03.jpg
+            - markup/img/apartment-03.jpg
+            - markup/img/apartment-03.jpg
+        isPremium:
+          type: boolean
+          example: true
+        isFavorites:
+          type: boolean
+          example: false
+        rating:
+          type: number
+          example: 5
+        type:
+          type: string
+          example: room
+          enum:
+            - apartment
+            - house
+            - room
+            - hotel
+        rooms:
+          type: number
+          example: 2
+        guests:
+          type: number
+          example: 3
+        price:
+          type: number
+          example: 10000
+        extras:
+          type: array
+          example:
+            - Breakfast
+            - Washer
+          enum:
+            - Breakfast
+            - Air conditioning
+            - Laptop friendly workspace
+            - Baby seat
+            - Washer
+            - Towels
+            - Fridge
+        userId:
+          type: string
+          example: asdaw11qeqw3
+        comments:
+          type: string
+          example: 15
+        coords:
+          type: object
+          example: {52.370216;4.895168}
+
+    createOffer:
+      type: object
+      properties:
+        name:
+          type: string
+          example: Гостевой дом
+        description:
+          type: string
+          example: Прелестное место для отдыха
+        date:
+          type: string
+          example: 2024-04-12T20:17:46.384Z
+        city:
+          type: string
+          example: Paris
+          enum:
+            - Paris
+            - Cologne
+            - Brussels
+            - Amsterdam
+            - Hamburg
+            - Dusseldorf
+        prevPhoto:
+          type: string
+          example: markup/img/paris.jpg
+        photo:
+          type: array
+          example:
+            - markup/img/apartment-03.jpg
+            - markup/img/apartment-03.jpg
+            - markup/img/apartment-03.jpg
+            - markup/img/apartment-03.jpg
+            - markup/img/apartment-03.jpg
+            - markup/img/apartment-03.jpg
+        isPremium:
+          type: boolean
+          example: true
+        isFavorites:
+          type: boolean
+          example: false
+        rating:
+          type: number
+          example: 5
+        type:
+          type: string
+          example: room
+          enum:
+            - apartment
+            - house
+            - room
+            - hotel
+        rooms:
+          type: number
+          example: 2
+        guests:
+          type: number
+          example: 3
+        price:
+          type: number
+          example: 10000
+        extras:
+          type: array
+          example:
+            - Breakfast
+            - Washer
+          enum:
+            - Breakfast
+            - Air conditioning
+            - Laptop friendly workspace
+            - Baby seat
+            - Washer
+            - Towels
+            - Fridge
+        userId:
+          type: string
+          example: asdaw11qeqw3
+        coords:
+          type: object
+          example: { 52.370216;4.895168 }
+
+
+
+
+

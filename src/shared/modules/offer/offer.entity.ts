@@ -1,11 +1,5 @@
-import {defaultClasses, getModelForClass, modelOptions, prop, Ref} from '@typegoose/typegoose';
-import {
-  CityType,
-  CoordinatesType,
-  OfferType,
-  TypeOfHouseEnum,
-  UserType
-} from '../../types/index.js';
+import {defaultClasses, getModelForClass, modelOptions, prop, Ref, Severity} from '@typegoose/typegoose';
+import {CityType, CoordinatesType, OfferType, TypeOfHouseEnum, UserType} from '../../types/index.js';
 import {UserEntity} from '../user/index.js';
 
 // eslint-disable-next-line @typescript-eslint/no-unsafe-declaration-merging
@@ -13,8 +7,8 @@ export interface OfferEntity extends defaultClasses.Base{}
 @modelOptions(
   {
     schemaOptions: {
-      collection: 'offer',
-      timestamps: true
+      collection: 'offers',
+      timestamps: true,
     }
   }
 )
@@ -29,12 +23,13 @@ export class OfferEntity extends defaultClasses.TimeStamps implements OfferType 
   @prop({require: true})
   public date: Date;
 
+  @prop({require: true})
   public city: CityType;
 
   @prop({require: true})
   public prevPhoto: string;
 
-  @prop({require: true})
+  @prop({require: true, allowMixed: Severity.ALLOW})
   public photo: string[];
 
   @prop({require: true})
@@ -64,6 +59,7 @@ export class OfferEntity extends defaultClasses.TimeStamps implements OfferType 
 
   @prop({
     require: true,
+    allowMixed: Severity.ALLOW,
   })
   public extras: string[];
 
@@ -75,7 +71,7 @@ export class OfferEntity extends defaultClasses.TimeStamps implements OfferType 
   @prop({require: true})
   public comments: number;
 
-
+  @prop({require: true})
   public coords: CoordinatesType;
 }
 
